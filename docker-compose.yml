@@ -5,7 +5,7 @@ services:
       context: ./beacon-chain
       args:
         BEACON_API_PORT: 3500
-        UPSTREAM_VERSION: 24.1.0
+        UPSTREAM_VERSION: 24.3.1
     environment:
       BEACON_API_PORT: 3500
       CHECKPOINT_SYNC_URL: ""
@@ -14,22 +14,22 @@ services:
       EXTRA_OPTS: ""
       JAVA_OPTS: "-Xmx6g"
     volumes:
-      - "teku-prater-data:/opt/teku/data"
+      - teku-prater-data:/opt/teku/data
     ports:
-      - "9505:9505/tcp"
-      - "9505:9505/udp"
+      - 9505:9505/tcp
+      - 9505:9505/udp
     restart: unless-stopped
-    image: "beacon-chain.teku-prater.dnp.dappnode.eth:0.1.11"
+    image: beacon-chain.teku-prater.dnp.dappnode.eth:0.1.11
     security_opt:
-      - "seccomp:unconfined"
+      - seccomp:unconfined
   validator:
     build:
       context: ./validator
       args:
-        UPSTREAM_VERSION: 24.1.0
+        UPSTREAM_VERSION: 24.3.1
     environment:
       LOG_TYPE: INFO
-      BEACON_NODE_ADDR: "http://beacon-chain.teku-prater.dappnode:3500"
+      BEACON_NODE_ADDR: http://beacon-chain.teku-prater.dappnode:3500
       GRAFFITI: validating_from_DAppNode
       EXTRA_OPTS: ""
       EXIT_VALIDATOR: ""
@@ -37,8 +37,8 @@ services:
       FEE_RECIPIENT_ADDRESS: ""
       JAVA_OPTS: "-Xmx6g"
     restart: unless-stopped
-    image: "validator.teku-prater.dnp.dappnode.eth:0.1.11"
+    image: validator.teku-prater.dnp.dappnode.eth:0.1.11
     security_opt:
-      - "seccomp:unconfined"
+      - seccomp:unconfined
 volumes:
   teku-prater-data: {}
